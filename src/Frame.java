@@ -45,7 +45,7 @@ public class Frame extends JFrame {
 
 	private JTextArea textOutput;
 	private JTabbedPane tabbedPane;
-	private JComboBox verseType;
+	private JComboBox<String> verseType;
 
 	private JLabel label1;
 	private JLabel label2;
@@ -65,7 +65,7 @@ public class Frame extends JFrame {
 
 	public Frame(){
 
-		verseList = new ArrayList(10);
+		verseList = new ArrayList<>(10);
 		fileToRead = "Temp Lists/DefaultVerseList.txt";
 		fileToWrite = "Temp Lists/HappyTempList.txt";
 		
@@ -126,7 +126,7 @@ public class Frame extends JFrame {
 		verseNumField = new JTextField(40);
 
 		// JComboBox
-		verseType = new JComboBox(new String[]{"Happy", "Sad", "Depressed", "Family", "Friends", "Uplift"});
+		verseType = new JComboBox<String>(new String[]{"Happy", "Sad", "Depressed", "Family", "Friends", "Uplift"});
 		verseType.addActionListener(new listToAddToComboBox());
 
 		// Add Components to mainPanel
@@ -160,7 +160,7 @@ public class Frame extends JFrame {
 
 	public static void main(String[] args){
 
-		Frame frame = new Frame();
+		new Frame();
 		readTextFile();
 	}
 
@@ -189,7 +189,11 @@ public class Frame extends JFrame {
 
 		// Generates Random Number: 1  through verseList.size()
 		System.out.println(verseList.size());
+		if(verseList.size()  <= 0)
+			return "No Verses Available";	
 		int randomNum = rand.nextInt(verseList.size());
+
+		
 		return verseList.get(randomNum);
 	}
 
@@ -208,7 +212,7 @@ public class Frame extends JFrame {
 			}
 			// <--- Testing ---> 
 			//System.out.println(verseList.toString());
-			
+			scan.close();
 		}catch(FileNotFoundException e){
 			// <--- Testing ---> 
 //			System.out.println("ERROR: FILE NOT FOUND");
@@ -218,6 +222,9 @@ public class Frame extends JFrame {
 
 	}
 
+	
+	
+	
 	// 	<----------Action Listener Classes ---------->
 	public class RandomButtonListener implements ActionListener{
 		Random rand = new Random();
